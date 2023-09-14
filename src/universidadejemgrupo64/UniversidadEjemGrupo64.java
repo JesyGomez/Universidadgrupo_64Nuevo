@@ -19,7 +19,9 @@ public class UniversidadEjemGrupo64 {
         
         
         ///PROBANDO DEEEE NUEVOOOOOOOO!!!!!!!!
-        //// GRACIAS TUCU///
+        //// GRACIAS ///
+        
+        
         //Alumno Alejandro=new Alumno(3,30597421,"Lopez","Lionel",LocalDate.of(1980, 5, 20),true);
         //AlumnoData alu = new AlumnoData();
         //alu.guardarAlumno(Alejandro);
