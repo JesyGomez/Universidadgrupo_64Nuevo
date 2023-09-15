@@ -19,6 +19,10 @@ public class MateriaData {
         
         con=Conexion.getConexion();
     }
+
+    public MateriaData(int codigo, String nombre, int anio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
      public void guardarMateria(Materia materia){
     
