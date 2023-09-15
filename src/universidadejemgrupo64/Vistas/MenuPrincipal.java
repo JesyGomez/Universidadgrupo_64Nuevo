@@ -83,6 +83,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jmAdministracion.add(jmManejoInsc);
 
         jmManipuNota.setText("Manipulación de Notas");
+        jmManipuNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmManipuNotaActionPerformed(evt);
+            }
+        });
         jmAdministracion.add(jmManipuNota);
 
         jMenuBar1.add(jmAdministracion);
@@ -163,6 +168,17 @@ public class MenuPrincipal extends javax.swing.JFrame {
         escritorio.moveToFront(fm);
  
     }//GEN-LAST:event_jmForMateriaActionPerformed
+
+    private void jmManipuNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmManipuNotaActionPerformed
+        // TODO add your handling code here:
+         escritorio.removeAll();
+        escritorio.repaint();
+        CargaDeNotas cdn= new CargaDeNotas();
+        cdn.setVisible(true);
+        escritorio.add(cdn);
+        escritorio.moveToFront(cdn);
+        
+    }//GEN-LAST:event_jmManipuNotaActionPerformed
 
     /**
      * @param args the command line arguments
