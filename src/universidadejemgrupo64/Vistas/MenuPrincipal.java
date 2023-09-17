@@ -151,6 +151,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jmAlumMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAlumMateriaActionPerformed
         // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        AlumnoPorMateria apm=new AlumnoPorMateria();
+        apm.setVisible(true);
+        escritorio.add(apm);
+        escritorio.moveToFront(apm);
     }//GEN-LAST:event_jmAlumMateriaActionPerformed
 
     private void jmAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAlumnoActionPerformed
