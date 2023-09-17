@@ -4,8 +4,12 @@
  * and open the template in the editor.
  */
 package universidadejemgrupo64.Vistas;
-import java.awt.Image;
-import javax.swing.ImageIcon;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import universidadejemgrupo64.Entidades.Alumno;
+import universidadejemplogrupo64.AccesoADatos.AlumnoData;
 /**
  *
  * @author Windows 10 OS
@@ -42,7 +46,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         jbEliminar = new javax.swing.JButton();
         jbGuardar = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jdcFechaNac = new com.toedter.calendar.JDateChooser();
         jlBuscar = new javax.swing.JLabel();
         jcbEstado = new javax.swing.JCheckBox();
 
@@ -98,13 +102,25 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         jbGuardar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jbGuardar.setForeground(new java.awt.Color(255, 255, 255));
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setBackground(new java.awt.Color(0, 102, 255));
         jbSalir.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jbSalir.setForeground(new java.awt.Color(255, 255, 255));
         jbSalir.setText("Salir");
 
+        jdcFechaNac.setDateFormatString("yyyy-MM-dd");
+
         jlBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/32x32.png"))); // NOI18N
+        jlBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlBuscarMouseClicked(evt);
+            }
+        });
 
         jcbEstado.setBackground(new java.awt.Color(0, 102, 255));
         jcbEstado.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
@@ -132,31 +148,30 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jlFechaNac)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jlDocumento)
-                                        .addGap(19, 19, 19)
-                                        .addComponent(jtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jlBuscar))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jlNombre)
-                                                .addGap(4, 4, 4))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jlApellido)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jlEstado)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jcbEstado))))))
+                                    .addComponent(jdcFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jlDocumento)
+                                    .addGap(19, 19, 19)
+                                    .addComponent(jtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jlBuscar))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jlNombre)
+                                            .addGap(4, 4, 4))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jlApellido)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jlEstado)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jcbEstado)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
+                        .addGap(136, 136, 136)
                         .addComponent(jlAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
@@ -185,7 +200,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jlFechaNac)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbNuevo)
@@ -209,15 +224,66 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jlBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlBuscarMouseClicked
+        // TODO add your handling code here:
+            
+    }//GEN-LAST:event_jlBuscarMouseClicked
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        
+        /////// PRIMERO INSTANCIO UN AlumnoData PARA PODER LLAMAR SUS METODOS:
+        AlumnoData alu = new AlumnoData();
+        
+        /////// SEGUNDO INSTANCIO UN Alumno PARA PODER LLAMAR SUS METODOS
+        Alumno guardarAlumno = new Alumno();
+        
+        //// PASO A GUARDAR CADA DATO DEL FORMULARIO ADENTRO DE VARIABLES QUE LUEGO QUE SE UTILIZARAN PARA
+        //// CARGAR LOS DATOS DEL Alumno INSTANCIADO guardarAlumno
+        
+        int dni = Integer.parseInt(jtDocumento.getText());
+        String apellido = jtApellido.getText();
+        String nombre = jtNombre.getText();
+        boolean estado = jcbEstado.isSelected(); /// EL METODO isSelected() marca true si el jcb esta tildado
+                                                 /// y false si no lo esta. De esa forma obtengo el estado.
+        
+        ////// COMO EL JDATECHOSER DE PORQUERIA TRAE UN DATO TIPO DATE, TENGO QUE GUARDARLO EN UNA NUEVA
+        ////// VARIABLE DEL MISMO TIPO
+        Date fechaSeleccionada = jdcFechaNac.getDate();
+        
+        ///// COMO EL TIPO DE DATO DE PORQUERIA DATE NO ME SIRVE, LO TENGO QUE TRANSFORMAR A LOCALDATE
+        ///// YA QUE LOS GETTER AND SETTER DE Alumno, MANEJAN LOCALDATE Y NO DATE.
+        LocalDate fechaNacimiento = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
+        //// COMIENZO A SETEAR EN guardarAlumno CON LAS VARIABLES CREADAS ANTERIORMENTE QUE TIENEN LOS DATOS
+        //// DEL FORMULARIO.
+        guardarAlumno.setDni(dni);
+        guardarAlumno.setApellido(apellido);
+        guardarAlumno.setNombre(nombre);
+        
+        ///// TODA LA TRAMOYA DEL DATE AL LOCAL DATE ERA PARA ESTO, PARA PASAR LA FECHA QUE TRAJE DEL JDATECHOSER
+        ///// DE TIPO A DATE, A LOCAL DATE, ESE DATO SE GUARDO EN LA VARIABLE fechaNacimiento , Y ESA VARIABLE
+        ///// ES LA QUE LE PUEDO PASAR AL ALUMNO SIN QUE SE CRASHEE TODO. YA QUE EL ATRIBUTO fechaNacimiento 
+        ///// DE Alumno ES DE TIPO LOCALDATE :...(        
+        guardarAlumno.setFechaNacimiento(fechaNacimiento);
+        
+        guardarAlumno.setActivo(estado);
+        
+        ///// YA CREADO EL ALUMNO DE PORQUERIA, SE LO PASO AL METODO guardarAlumno QUE SE ENCUENTRA EN AlumnoData
+        ///// A TRAVES DEL alu INSTANCIADO AL PRINCIPIO.
+        
+        alu.guardarAlumno(guardarAlumno);
+        
+    }//GEN-LAST:event_jbGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbNuevo;
     private javax.swing.JButton jbSalir;
     private javax.swing.JCheckBox jcbEstado;
+    private com.toedter.calendar.JDateChooser jdcFechaNac;
     private javax.swing.JLabel jlAlumno;
     private javax.swing.JLabel jlApellido;
     private javax.swing.JLabel jlBuscar;
