@@ -160,7 +160,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jmForMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmForMateriaActionPerformed
         // TODO add your handling code here:
-       escritorio.removeAll();
+        escritorio.removeAll();
         escritorio.repaint();
         FormularioMateria fm=new FormularioMateria();
         fm.setVisible(true);
@@ -171,7 +171,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jmManipuNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmManipuNotaActionPerformed
         // TODO add your handling code here:
-         escritorio.removeAll();
+        escritorio.removeAll();
         escritorio.repaint();
         CargaDeNotas cdn= new CargaDeNotas();
         cdn.setVisible(true);
