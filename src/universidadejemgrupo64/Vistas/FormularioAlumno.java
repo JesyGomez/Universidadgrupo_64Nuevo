@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package universidadejemgrupo64.Vistas;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -226,6 +227,23 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     private void jlBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlBuscarMouseClicked
         // TODO add your handling code here:
+        int dni = Integer.parseInt(jtDocumento.getText());
+        AlumnoData alu = new AlumnoData();
+        Alumno alumnoEncontrado = alu.buscarAlumnoPorDni(dni);
+        
+        if (alumnoEncontrado!=null) {
+            
+            LocalDate fechaNacimientoLocalDate = alumnoEncontrado.getFechaNacimiento();
+            Instant instant = fechaNacimientoLocalDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+            Date fechaNacimientoDate = Date.from(instant);
+            
+            jtApellido.setText(alumnoEncontrado.getApellido());
+            jtNombre.setText(alumnoEncontrado.getNombre());
+            jcbEstado.isSelected();
+            jdcFechaNac.setDate(fechaNacimientoDate);
+            
+            
+        }
             
     }//GEN-LAST:event_jlBuscarMouseClicked
 
