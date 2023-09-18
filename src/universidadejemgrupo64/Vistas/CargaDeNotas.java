@@ -7,10 +7,12 @@ package universidadejemgrupo64.Vistas;
 
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import universidadejemgrupo64.Entidades.Alumno;
 import universidadejemplogrupo64.AccesoADatos.AlumnoData;
 import universidadejemplogrupo64.AccesoADatos.InscripcionData;
+import universidadejemplogrupo64.AccesoADatos.MateriaData;
 
 /**
  *
@@ -76,11 +78,6 @@ private DefaultTableModel modelo=new DefaultTableModel(){
                 jcbAlumnosActionPerformed(evt);
             }
         });
-        jcbAlumnos.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jcbAlumnosKeyReleased(evt);
-            }
-        });
 
         jbGuardarN.setText("Guardar");
 
@@ -142,12 +139,20 @@ private DefaultTableModel modelo=new DefaultTableModel(){
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jcbAlumnosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcbAlumnosKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcbAlumnosKeyReleased
-
     private void jcbAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbAlumnosActionPerformed
         // TODO add your handling code here:
+        
+        Alumno alumnoSeleccionado = (Alumno) jcbAlumnos.getSelectedItem();
+        InscripcionData aluIns = new InscripcionData();
+        
+        if (alumnoSeleccionado != null){
+            
+            int idSeleccionado = alumnoSeleccionado.getIdAlumno();
+            JOptionPane.showMessageDialog(null,idSeleccionado );
+            aluIns.obtenerMateriasCursadas(idSeleccionado);
+            
+        }
+        
        
        
         
@@ -165,7 +170,7 @@ private DefaultTableModel modelo=new DefaultTableModel(){
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbGuardarN;
     private javax.swing.JButton jbSalir;
-    private javax.swing.JComboBox<String> jcbAlumnos;
+    private javax.swing.JComboBox<Alumno> jcbAlumnos;
     private javax.swing.JTable jtTablaMateria;
     // End of variables declaration//GEN-END:variables
     
@@ -182,9 +187,7 @@ private DefaultTableModel modelo=new DefaultTableModel(){
          
          AlumnoData alu=new AlumnoData();
         for (Alumno alumno:alu.listarAlumnos()){
-            jcbAlumnos.addItem("ID: "+alumno.getIdAlumno()+" // "+"Dni: "+alumno.getDni()+" // "+"Apellido: "+
-            alumno.getApellido()+" // "+"Nombre: "+alumno.getNombre()+" // "+"Fecha de Nacimiento: "+
-            alumno.getFechaNacimiento());
+            jcbAlumnos.addItem(alumno);
         }
         
     
