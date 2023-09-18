@@ -50,6 +50,8 @@ private DefaultTableModel modelo=new DefaultTableModel(){
         jbSalir = new javax.swing.JButton();
 
         setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setText("Carga de notas");
@@ -180,7 +182,9 @@ private DefaultTableModel modelo=new DefaultTableModel(){
          
          AlumnoData alu=new AlumnoData();
         for (Alumno alumno:alu.listarAlumnos()){
-            jcbAlumnos.addItem(alumno.toString());
+            jcbAlumnos.addItem("ID: "+alumno.getIdAlumno()+" // "+"Dni: "+alumno.getDni()+" // "+"Apellido: "+
+            alumno.getApellido()+" // "+"Nombre: "+alumno.getNombre()+" // "+"Fecha de Nacimiento: "+
+            alumno.getFechaNacimiento());
         }
         
     

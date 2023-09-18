@@ -15,7 +15,7 @@ public class UniversidadEjemGrupo64 {
 
     public static void main(String[] args) {
 
-        Connection con=Conexion.getConexion();
+        Connection con = Conexion.getConexion();
 ////                
 ////        Alumno Alejandro=new Alumno(3,30597421,"Lopez","Lionel",LocalDate.of(1980, 5, 20),true);
 ////        AlumnoData alu = new AlumnoData();
@@ -64,6 +64,5 @@ public class UniversidadEjemGrupo64 {
 ////        }
 ////    }
 
+    }
 }
-}
-

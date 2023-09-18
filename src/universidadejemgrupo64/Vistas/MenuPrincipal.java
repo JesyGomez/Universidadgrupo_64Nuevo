@@ -2,6 +2,7 @@ package universidadejemgrupo64.Vistas;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class MenuPrincipal extends javax.swing.JFrame {
 
@@ -10,6 +11,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal() {
         initComponents();
+        escritorio = new EscritorioModificado();
+        this.setContentPane(escritorio);
         setLocationRelativeTo(null);
     }
 
@@ -105,6 +108,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jmConsultas);
 
         jmSalir.setText("Salir");
+        jmSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmSalirMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jmSalir);
 
         setJMenuBar(jMenuBar1);
@@ -125,26 +133,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jmForAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmForAlumnoActionPerformed
         // TODO add your handling code here:
-        
 
         ///////////// ACA INICIALIZO LA VISTA DEL FORMULARIO DE ALUMNO//////
-        
         //////////// RENOMBRE EL JDESKTOPANE COMO escritorio PARA LLAMAR SUS METODOS MAS FACIL
-        
         //////////// PRIMERO REMUEVO CUALQUIER COSA QUE HAYA EN EL ESCRITORIO
         escritorio.removeAll();
         //////////// DESPIES REPINTO TODO EL ESCRITORIO
         escritorio.repaint();
-        
+
         /////////// ACA INSTANCIO EL FORMULARIO DE ALUMNO
         FormularioAlumno fa = new FormularioAlumno();
-        
+
         ////////// ACA YA CON EL NUEVO FORMULARIO DE ALUMNO LLAMADO fa LO SETEO EN VISIBLE
         fa.setVisible(true);
-        
+
         ////////// ACA AGREGO A fa AL ESCRITORIO
         escritorio.add(fa);
-        
+
         ///////// ACA MUEVO AL FRENTE A fa
         escritorio.moveToFront(fa);
     }//GEN-LAST:event_jmForAlumnoActionPerformed
@@ -153,7 +158,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         escritorio.removeAll();
         escritorio.repaint();
-        AlumnoPorMateria apm=new AlumnoPorMateria();
+        AlumnoPorMateria apm = new AlumnoPorMateria();
         apm.setVisible(true);
         escritorio.add(apm);
         escritorio.moveToFront(apm);
@@ -161,30 +166,40 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jmAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAlumnoActionPerformed
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_jmAlumnoActionPerformed
 
     private void jmForMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmForMateriaActionPerformed
         // TODO add your handling code here:
         escritorio.removeAll();
         escritorio.repaint();
-        FormularioMateria fm=new FormularioMateria();
+        FormularioMateria fm = new FormularioMateria();
         fm.setVisible(true);
         escritorio.add(fm);
         escritorio.moveToFront(fm);
- 
+
     }//GEN-LAST:event_jmForMateriaActionPerformed
 
     private void jmManipuNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmManipuNotaActionPerformed
         // TODO add your handling code here:
         escritorio.removeAll();
         escritorio.repaint();
-        CargaDeNotas cdn= new CargaDeNotas();
+        CargaDeNotas cdn = new CargaDeNotas();
         cdn.setVisible(true);
         escritorio.add(cdn);
         escritorio.moveToFront(cdn);
-        
+
     }//GEN-LAST:event_jmManipuNotaActionPerformed
+
+    private void jmSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmSalirMouseClicked
+        // TODO add your handling code here:
+        int a = JOptionPane.YES_NO_OPTION;
+        int resultado = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea Salir?", "SALIR", a);
+        if (resultado == 0) {
+
+            this.dispose();
+        }
+    }//GEN-LAST:event_jmSalirMouseClicked
 
     /**
      * @param args the command line arguments
