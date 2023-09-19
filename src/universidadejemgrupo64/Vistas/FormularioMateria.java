@@ -12,11 +12,14 @@ import universidadejemplogrupo64.AccesoADatos.MateriaData;
 
 public class FormularioMateria extends javax.swing.JInternalFrame {
 
+    private MateriaData md;
+
     /**
      * Creates new form FormularioMateria
      */
     public FormularioMateria() {
         initComponents();
+        this.md = md;
     }
 
     /**
@@ -231,38 +234,20 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
-        // Obtener los datos de la nueva materia desde los campos de texto
-       String nombreMateria = jtNombre.getText();
-        int anioMateria = Integer.parseInt(jtAnio.getText()); // Convertir a entero
-        boolean estadoMateria = true; // Por defecto, puedes cambiar esto según tus necesidades
+    // Crear una instancia de MateriaData 
+        MateriaData materiaData = new MateriaData();
 
-        try {
-            // Establecer la conexión a la base de datos
-            Connection con = Conexion.getConexion();
+    // Obtener los datos de la nueva materia desde los campos de texto
+        String nombreMateria = jtNombre.getText();
+        int anioMateria = Integer.parseInt(jtAnio.getText());
+        boolean estadoMateria = jrbEstado.isSelected();
 
-            // Crear y ejecutar una consulta SQL para insertar la nueva materia
-            String sql = "INSERT INTO materia (nombre, año, estado) VALUES (?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(sql);
+    // Crear una instancia de Materia
+        Materia nuevaMateria = new Materia(nombreMateria, anioMateria, estadoMateria);
 
-            ps.setString(1, nombreMateria);
-            ps.setInt(2, anioMateria);
-            ps.setBoolean(3, estadoMateria);
+    // Llamar al método guardarMateria de materiaData
+        materiaData.guardarMateria(nuevaMateria);
 
-            int exito = ps.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Materia Guardada"); 
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al guardar la materia");
-            }
-
-            // Cerrar la conexión y el PreparedStatement
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia");
-        }
-
-
-        // Limpiar los campos después de guardar
         jtID.setText("");
         jtNombre.setText("");
         jtAnio.setText("");
@@ -271,86 +256,42 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
-        // TODO add your handling code here:
-       String eliminarMateria = jtNombre.getText();
+        // Obtener el ID de la materia desde el campo de texto jtID
+        MateriaData materiaData = new MateriaData();
 
-        try {
-            // Establecer la conexión a la base de datos
-            Connection con = Conexion.getConexion();
+        int idMateria = Integer.parseInt(jtID.getText());
 
-            // Crear y ejecutar una consulta SQL para insertar la nueva materia
-            String sql = "UPDATE materia SET estado = 0 WHERE nombre = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
+        // Llamar al método eliminarMateria de materiaData
+        materiaData.eliminarMateria(idMateria);
 
-            ps.setString(WIDTH, eliminarMateria);
-
-            int exito = ps.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Materia dada de Baja correctamente!"); 
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al guardar la materia");
-            }
-
-            // Cerrar la conexión y el PreparedStatement
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia");
-        }
-
-        /*try {
-            // Mostrar un cuadro de diálogo de confirmación
-            int respuesta = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar esta Materia?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
-
-            if (respuesta == JOptionPane.YES_OPTION) {
-                materiaAEliminar.eliminarMateria(WIDTH);
-                JOptionPane.showMessageDialog(this, "Materia eliminado exitosamente!!!");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }*/
-
-        // Limpiar los campos después de eliminar
         jtID.setText("");
         jtNombre.setText("");
         jtAnio.setText("");
         jrbEstado.setSelected(false);
+
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jlBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlBuscarMouseClicked
-        // TODO add your handling code here:
-        String nombreMateria = jtNombre.getText(); // Obtener el nombre de la materia ingresado por el usuario
+        // Obtener el ID de la materia desde el campo de texto jtID
+        int idMateria = Integer.parseInt(jtID.getText());
+        MateriaData materiaData = new MateriaData();
 
-        try {
-            // Establecer la conexión a la base de datos
-            Connection con = Conexion.getConexion();
+        // Llamar al método buscarMateria de materiaData
+        Materia materiaEncontrada = materiaData.buscarMateria(idMateria);
 
-            // Crear y ejecutar una consulta SQL para buscar la materia por nombre
-            String sql = "SELECT * FROM materia WHERE nombre = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, nombreMateria);
-            ResultSet rs = ps.executeQuery();
-
-            // Verificar si la materia se encontró
-            if (rs.next()) {
-                // La materia se encontró, puedes mostrar un mensaje o realizar alguna acción
-                JOptionPane.showMessageDialog(this, "La materia se encontró en la lista.");
-            } else {
-                // La materia no se encontró, puedes mostrar un mensaje o realizar otra acción
-                JOptionPane.showMessageDialog(this, "La materia No se encontró en la lista.");
-            }
-
-            // Cerrar la conexión
-            ps.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia");
-            // Manejar la excepción apropiadamente, por ejemplo, mostrar un mensaje de error al usuario.
-        }
+        if (materiaEncontrada != null) {
+            JOptionPane.showMessageDialog(this, "La materia se encontró en la lista.");
+            // Llenar los campos con la información de la materia encontrada
+            jtNombre.setText(materiaEncontrada.getNombre());
+            jtAnio.setText(String.valueOf(materiaEncontrada.getAnio()));
+            jrbEstado.setSelected(materiaEncontrada.isEstado());
+        } else {
+            JOptionPane.showMessageDialog(this, "La materia no se encontró en la lista.");
             // Limpiar los campos si la materia no se encontró
-            jtID.setText("");
+            jtNombre.setText("");
             jtAnio.setText("");
             jrbEstado.setSelected(false);
-        
+        }
     }//GEN-LAST:event_jlBuscarMouseClicked
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
