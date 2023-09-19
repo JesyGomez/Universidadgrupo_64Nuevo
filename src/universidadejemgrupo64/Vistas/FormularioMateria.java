@@ -46,6 +46,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
         jbNuevo = new javax.swing.JButton();
         jlBuscar = new javax.swing.JLabel();
         jbSalir = new javax.swing.JButton();
+        jbModificar = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -141,6 +142,16 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
             }
         });
 
+        jbModificar.setBackground(new java.awt.Color(0, 102, 255));
+        jbModificar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jbModificar.setForeground(new java.awt.Color(255, 255, 255));
+        jbModificar.setText("Modificar");
+        jbModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbModificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPEscritorioLayout = new javax.swing.GroupLayout(jPEscritorio);
         jPEscritorio.setLayout(jPEscritorioLayout);
         jPEscritorioLayout.setHorizontalGroup(
@@ -152,29 +163,37 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                         .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
                             .addGroup(jPEscritorioLayout.createSequentialGroup()
-                                .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlCodigoEtiqueta)
-                                    .addComponent(jlNombreEtiqueta)
-                                    .addComponent(jlAnioEtiqueta)
-                                    .addComponent(jlEstado))
-                                .addGap(45, 45, 45)
+                                .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPEscritorioLayout.createSequentialGroup()
+                                        .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jlCodigoEtiqueta)
+                                            .addComponent(jlNombreEtiqueta)
+                                            .addComponent(jlEstado))
+                                        .addGap(45, 45, 45))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPEscritorioLayout.createSequentialGroup()
+                                        .addComponent(jlAnioEtiqueta)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jtID, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
                                     .addComponent(jtNombre)
                                     .addComponent(jtAnio)
                                     .addComponent(jrbEstado))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                         .addComponent(jlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34))
                     .addGroup(jPEscritorioLayout.createSequentialGroup()
-                        .addComponent(jbNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(32, 32, 32)
                         .addComponent(jbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addComponent(jbSalir)
-                        .addContainerGap())))
+                        .addGap(35, 35, 35))))
+            .addGroup(jPEscritorioLayout.createSequentialGroup()
+                .addComponent(jbNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76)
+                .addComponent(jbModificar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addComponent(jbSalir)
+                .addContainerGap())
         );
         jPEscritorioLayout.setVerticalGroup(
             jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,24 +216,23 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                         .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jlNombreEtiqueta))
-                        .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPEscritorioLayout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(jtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPEscritorioLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlAnioEtiqueta)
-                                .addGap(55, 55, 55))))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlAnioEtiqueta))
+                        .addGap(64, 64, 64))
                     .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jlEstado)
                         .addComponent(jrbEstado)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbNuevo)
+                    .addComponent(jbSalir)
+                    .addComponent(jbModificar))
+                .addGap(32, 32, 32)
                 .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbEliminar)
-                    .addComponent(jbGuardar)
-                    .addComponent(jbNuevo)
-                    .addComponent(jbSalir))
+                    .addComponent(jbGuardar))
                 .addGap(14, 14, 14))
         );
 
@@ -234,18 +252,18 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
-    // Crear una instancia de MateriaData 
+        // Crear una instancia de MateriaData 
         MateriaData materiaData = new MateriaData();
 
-    // Obtener los datos de la nueva materia desde los campos de texto
+        // Obtener los datos de la nueva materia desde los campos de texto
         String nombreMateria = jtNombre.getText();
         int anioMateria = Integer.parseInt(jtAnio.getText());
         boolean estadoMateria = jrbEstado.isSelected();
 
-    // Crear una instancia de Materia
+        // Crear una instancia de Materia
         Materia nuevaMateria = new Materia(nombreMateria, anioMateria, estadoMateria);
 
-    // Llamar al método guardarMateria de materiaData
+        // Llamar al método guardarMateria de materiaData
         materiaData.guardarMateria(nuevaMateria);
 
         jtID.setText("");
@@ -312,12 +330,39 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
         jrbEstado.setSelected(false);
     }//GEN-LAST:event_jbNuevoActionPerformed
 
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        // TODO add your handling code here:
+        MateriaData materiaData = new MateriaData();
+
+        // Obtener los datos de la materia desde los campos de texto y otros controles
+        int idMateria = Integer.parseInt(jtID.getText());
+        String nombreMateria = jtNombre.getText();
+        int anioMateria = Integer.parseInt(jtAnio.getText());
+        boolean estadoMateria = jrbEstado.isSelected();
+
+    // Crear una instancia de Materia con los datos modificados
+        Materia materiaModificada = new Materia(idMateria, nombreMateria, anioMateria, estadoMateria);
+
+    // Llamar al método modificarMateria de materiaData
+        materiaData.modificarMateria(materiaModificada);
+
+        JOptionPane.showMessageDialog(this, "Materia modificada exitosamente.");
+
+// Limpiar los campos después de modificar
+        jtID.setText("");
+        jtNombre.setText("");
+        jtAnio.setText("");
+        jrbEstado.setSelected(false);
+
+    }//GEN-LAST:event_jbModificarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPEscritorio;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGuardar;
+    private javax.swing.JButton jbModificar;
     private javax.swing.JButton jbNuevo;
     private javax.swing.JButton jbSalir;
     private javax.swing.JLabel jlAnioEtiqueta;
