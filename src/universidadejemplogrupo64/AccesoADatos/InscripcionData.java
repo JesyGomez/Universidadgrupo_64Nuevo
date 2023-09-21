@@ -197,5 +197,42 @@ public class InscripcionData {
         return alumnosMateria;
 
        }
+//     
+//
+     public List<Inscripcion> obtenerMateriasCursadasDos(int idAlumno){
+            ArrayList<Inscripcion> materias=new ArrayList<>();
+            
+            String sql="SELECT inscripcion.idMateria, materia.nombre, nota "
+                    + "FROM materia JOIN inscripcion ON(materia.idMateria = inscripcion.idMateria) JOIN alumno ON(inscripcion.idAlumno = alumno.idAlumno)"
+                    + " WHERE inscripcion.idAlumno = ?";
+                    
+                    
+                
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setInt(1, idAlumno);
+           //ps.setInt(1,id);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                 Inscripcion inscri= new Inscripcion();
+               
+               // inscri.setIdInscripcion(rs.getInt("codigo"));
+               
+                Materia materia=new Materia();
+                materia.setIdMateria(rs.getInt("idMateria"));
+                materia.setNombre(rs.getNString("nombre"));
+                 inscri.setNota(rs.getDouble("nota"));
+                inscri.setMateria(materia);
+               
+               
+                
+                materias.add(inscri);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Inscripción");
+        }
+        return materias;
+ 
+       }    
        
 }

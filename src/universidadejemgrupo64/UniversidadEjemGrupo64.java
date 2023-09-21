@@ -43,26 +43,32 @@ public class UniversidadEjemGrupo64 {
 ////            System.out.println("");
 ////            
 ////        }
-////        AlumnoData ad = new AlumnoData();
-////        MateriaData md = new MateriaData();
-////        InscripcionData id = new InscripcionData();
-////
-////        Alumno Lionel = ad.buscarAlumno(12);
-////        Materia mate = md.buscarMateria(5);
-////        Inscripcion insc = new Inscripcion(Lionel, mate, 8);
-////        id.guardarInscripcion(insc);
-////        id.actualizarNota(3,2,7);
-////        id.borrarInscripcionMateriaAlumno(3, 2);
-////        for (Inscripcion inscripcion : id.obtenerInscripciones()) {
-////            System.out.println("id"+inscripcion.getIdInscripcion());
-////            System.out.println("Apellido"+inscripcion.getAlumno());
-////            System.out.println("Materia"+inscripcion.getMateria());
-////        }
-////
-////        for (Materia materia : id.obtenerMateriasCursadas(5)) {
-////                System.out.println("nombre" + materia.getNombre());
-////        }
-////    }
+        AlumnoData ad = new AlumnoData();
+        MateriaData md = new MateriaData();
+        InscripcionData id = new InscripcionData();
+        id.obtenerMateriasCursadasDos(1);
+//        for (Inscripcion mar : ) {
+////            System.out.println("codido" + mar.getMateria().getIdMateria());
+////            System.out.println("nombre"+ mar.getMateria().getNombre());
+////            System.err.println("nota"+ mar.getNota());
+//        }
+//
+//        Alumno Lionel = ad.buscarAlumno(12);
+//        Materia mate = md.buscarMateria(5);
+//        Inscripcion insc = new Inscripcion(Lionel, mate, 8);
+//        id.guardarInscripcion(insc);
+//        id.actualizarNota(3,2,7);
+//        id.borrarInscripcionMateriaAlumno(3, 2);
+//        for (Inscripcion inscripcion : id.obtenerInscripciones()) {
+//            System.out.println("id"+inscripcion.getIdInscripcion());
+//            System.out.println("Apellido"+inscripcion.getAlumno());
+//            System.out.println("Materia"+inscripcion.getMateria());
+//        }
+//
+//        for (Materia materia : id.obtenerMateriasCursadas(5)) {
+//                System.out.println("nombre" + materia.getNombre());
+//        }
+//    }
 
     }
 }

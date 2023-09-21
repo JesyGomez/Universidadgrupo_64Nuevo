@@ -7,9 +7,12 @@ package universidadejemgrupo64.Vistas;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import universidadejemgrupo64.Entidades.Alumno;
+import universidadejemgrupo64.Entidades.Inscripcion;
+import universidadejemgrupo64.Entidades.Materia;
 import universidadejemplogrupo64.AccesoADatos.AlumnoData;
 import universidadejemplogrupo64.AccesoADatos.InscripcionData;
 import universidadejemplogrupo64.AccesoADatos.MateriaData;
@@ -19,8 +22,14 @@ import universidadejemplogrupo64.AccesoADatos.MateriaData;
  * @author Mis Documentos
  */
 public class CargaDeNotas extends javax.swing.JInternalFrame {
-private DefaultTableModel modelo=new DefaultTableModel(){
+  private MateriaData materiaData;
+    
+    private DefaultTableModel modelo=new DefaultTableModel(){
     public boolean isCellEditable(int f, int c){
+        
+         if (c ==2) {
+            return true;
+        }
           return false;
 }
 
@@ -28,8 +37,10 @@ private DefaultTableModel modelo=new DefaultTableModel(){
     /**
      * Creates new form CargaDeNotas
      */
+    
     public CargaDeNotas() {
         initComponents();
+       
         armarCabecera();
         cargarAlumnos();
     }
@@ -80,6 +91,11 @@ private DefaultTableModel modelo=new DefaultTableModel(){
         });
 
         jbGuardarN.setText("Guardar");
+        jbGuardarN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarNActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
         jbSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -93,41 +109,36 @@ private DefaultTableModel modelo=new DefaultTableModel(){
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(123, 123, 123)
-                                    .addComponent(jLabel1))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGap(22, 22, 22)
-                                    .addComponent(jLabel2)
-                                    .addGap(276, 276, 276))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(14, 14, 14)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(125, 125, 125)
-                                .addComponent(jbGuardarN)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jbSalir)))
-                        .addGap(0, 9, Short.MAX_VALUE))
+                        .addGap(123, 123, 123)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jcbAlumnos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(jbGuardarN)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbSalir)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jcbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jcbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -143,25 +154,73 @@ private DefaultTableModel modelo=new DefaultTableModel(){
         // TODO add your handling code here:
         
         Alumno alumnoSeleccionado = (Alumno) jcbAlumnos.getSelectedItem();
-        InscripcionData aluIns = new InscripcionData();
-        
+        //InscripcionData aluIns = new InscripcionData();
+        InscripcionData insc = new InscripcionData();
         if (alumnoSeleccionado != null){
-            
-            int idSeleccionado = alumnoSeleccionado.getIdAlumno();
-            JOptionPane.showMessageDialog(null,idSeleccionado );
-            aluIns.obtenerMateriasCursadas(idSeleccionado);
-            
+        borrarFilas();
+         for (Inscripcion inscrip :insc.obtenerMateriasCursadasDos(alumnoSeleccionado.getIdAlumno()) ) {
+         
+          modelo.addRow(new Object[]{
+              inscrip.getMateria().getIdMateria(),
+              inscrip.getMateria().getNombre(),
+              inscrip.getNota() });
         }
-        
-       
-       
-        
+        }  
+            
+//            int idSeleccionado = alumnoSeleccionado.getIdAlumno();
+//            JOptionPane.showMessageDialog(null,idSeleccionado );
+//            for(Inscripcion listarMateria: insc.obtenerMateriasCursadas(idSeleccionado)){
+//               jcbAlumnos.addItem(listarMateria);
+            
+           // Alumno alumnoSeleccionado = (Alumno) jcbAlumnos.getSelectedItem();
+//
+//         if (alumnoSeleccionado != null) {
+//           
+//            for (Materia materiaConNota : insc.cargarMateriasConNotas(alumnoSeleccionado.getIdAlumno())) {
+//        Materia materia = materiaConNota;
+//        //int nota = materiaConNota.get;
+//        modelo.addRow(new Object[]{
+//            materia.getIdMateria(),
+//            materia.getNombre(),
+//           // materia.getAnio(),
+//            //nota // Agrega la columna de nota
+//        });
+//    }
+
     }//GEN-LAST:event_jcbAlumnosActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         // TODO add your handling code here:
            this.setVisible(false);
     }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jbGuardarNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarNActionPerformed
+        // TODO add your handling code here:
+         InscripcionData insc = new InscripcionData();
+         Inscripcion in =new Inscripcion();
+         int filaSeleccinada=jtTablaMateria.getSelectedRow();
+      
+        if (filaSeleccinada!=-1) {
+            int idmateria=(Integer)jtTablaMateria.getValueAt(filaSeleccinada, 0);
+            
+            double nota=(Double)jtTablaMateria.getValueAt(filaSeleccinada, 2);
+//            return nota;
+           for (Alumno  alum : insc.obtenerAlumnosPorMateria(idmateria)) {
+            int idalumno= alum.getIdAlumno();
+            
+                 in.setNota(nota);
+                 
+//                 double nota2=;
+                  JOptionPane.showMessageDialog(null, nota);       
+                insc.actualizarNota(idalumno, idmateria, nota);
+
+                    //insc.actualizarNota(alum.getIdAlumno(), idmateria, nota);
+            }
+             
+           
+        }
+        
+    }//GEN-LAST:event_jbGuardarNActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -176,12 +235,21 @@ private DefaultTableModel modelo=new DefaultTableModel(){
     
     
     private void armarCabecera(){
-       modelo.addColumn("Codigo");
-       modelo.addColumn("Nombre");
+       modelo.addColumn("idMateria");
+       modelo.addColumn("nombre");
        modelo.addColumn("Nota");
        jtTablaMateria.setModel(modelo);
        
     }
+      private void borrarFilas() {
+
+        int filas = jtTablaMateria.getRowCount() - 1;
+        for (int f = filas; f >= 0; f--) {
+            modelo.removeRow(f);
+
+        }
+    }
+    
     
     private void cargarAlumnos( ){
          
@@ -192,6 +260,7 @@ private DefaultTableModel modelo=new DefaultTableModel(){
         
     
     }
+    
    
     }
 
