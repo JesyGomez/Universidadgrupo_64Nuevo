@@ -5,7 +5,14 @@
  */
 package universidadejemgrupo64.Vistas;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import universidadejemgrupo64.Entidades.Alumno;
+import universidadejemgrupo64.Entidades.Inscripcion;
+import universidadejemgrupo64.Entidades.Materia;
+import universidadejemplogrupo64.AccesoADatos.AlumnoData;
+import universidadejemplogrupo64.AccesoADatos.InscripcionData;
+import universidadejemplogrupo64.AccesoADatos.MateriaData;
 
 /**
  *
@@ -24,6 +31,7 @@ private DefaultTableModel modelo=new DefaultTableModel(){
     public AlumnoPorMateria() {
         initComponents();
         armarCabecera();
+        cargarMaterias();
     }
 
     /**
@@ -62,6 +70,11 @@ private DefaultTableModel modelo=new DefaultTableModel(){
         jcbMateria.setBackground(new java.awt.Color(0, 102, 255));
         jcbMateria.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jcbMateria.setForeground(new java.awt.Color(255, 255, 255));
+        jcbMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbMateriaActionPerformed(evt);
+            }
+        });
 
         jtAlumnosPorMateria.setBackground(new java.awt.Color(0, 102, 255));
         jtAlumnosPorMateria.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -83,6 +96,11 @@ private DefaultTableModel modelo=new DefaultTableModel(){
         jbSalir.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jbSalir.setForeground(new java.awt.Color(255, 255, 255));
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpEscritorioLayout = new javax.swing.GroupLayout(jpEscritorio);
         jpEscritorio.setLayout(jpEscritorioLayout);
@@ -135,12 +153,47 @@ private DefaultTableModel modelo=new DefaultTableModel(){
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        // TODO add your handling code here:
+        
+        int a = JOptionPane.YES_NO_OPTION;
+        int resultado = JOptionPane.showConfirmDialog(this, "Desea Salir?", "SALIR", a);
+        if (resultado == 0) {
+
+            this.dispose();
+        }
+        
+        
+    }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jcbMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMateriaActionPerformed
+        // TODO add your handling code here:
+        
+        Materia materiaSeleccionada = (Materia) jcbMateria.getSelectedItem();
+        InscripcionData aluData = new InscripcionData();
+        if (materiaSeleccionada != null){
+            borrarFilas();
+            for (Alumno inscrip :aluData.obtenerAlumnosPorMateria(materiaSeleccionada.getIdMateria()) ) {
+         
+          modelo.addRow(new Object[]{
+              inscrip.getIdAlumno(),
+              inscrip.getDni(),
+              inscrip.getApellido(),
+              inscrip.getNombre()});
+        }
+            
+            
+            
+        }
+        
+    }//GEN-LAST:event_jcbMateriaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLlistadoAlumnosPorMateria;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbSalir;
-    private javax.swing.JComboBox<String> jcbMateria;
+    private javax.swing.JComboBox<Materia> jcbMateria;
     private javax.swing.JLabel jlSeleccioneUnaMateria;
     private javax.swing.JPanel jpEscritorio;
     private javax.swing.JTable jtAlumnosPorMateria;
@@ -157,6 +210,23 @@ private DefaultTableModel modelo=new DefaultTableModel(){
        
     }
     
+    private void borrarFilas() {
+
+        int filas = jtAlumnosPorMateria.getRowCount() - 1;
+        for (int f = filas; f >= 0; f--) {
+            modelo.removeRow(f);
+
+        }
+    }
+    
+    private void cargarMaterias( ){
+         
+         MateriaData mate=new MateriaData();
+        for (Materia materia:mate.listarMateria()){
+            jcbMateria.addItem(materia);
+        }
+    
     
 
+}
 }
