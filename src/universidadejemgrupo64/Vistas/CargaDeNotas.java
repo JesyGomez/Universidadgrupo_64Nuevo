@@ -202,13 +202,13 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
       
         if (filaSeleccinada!=-1) {
             int idmateria=(Integer)jtTablaMateria.getValueAt(filaSeleccinada, 0);
-            
-            double nota=(Double)jtTablaMateria.getValueAt(filaSeleccinada, 2);
-//            return nota;
+              double nota2= obtenerNuevaNota();
+           // double nota=(Double)jtTablaMateria.getValueAt(filaSeleccinada, 2);
+               jtTablaMateria.setValueAt(nota2, filaSeleccinada, 2);
 
            for (Alumno  alum : insc.obtenerAlumnosPorMateria(idmateria)) {
             int idalumno= alum.getIdAlumno();
-        insc.actualizarNota(idalumno, idmateria, nota);    
+        insc.actualizarNota(idalumno, idmateria, nota2);    
             }
              
            
@@ -254,7 +254,17 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
         
     
     }
-    
+     private double obtenerNuevaNota() {
+    String input = JOptionPane.showInputDialog("Ingrese la nueva nota:");
+    try {
+       
+        return Double.parseDouble(input);
+    } catch (NumberFormatException e) {
+        
+        JOptionPane.showMessageDialog(null, "La entrada no es un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        return 0.0; //
+    }
+}
    
     }
 
