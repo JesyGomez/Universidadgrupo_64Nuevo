@@ -83,11 +83,11 @@ public class Alumno {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-
+    
     @Override
     public String toString() {
-        return "Alumno{" + "idAlumno=" + idAlumno + ", dni=" + dni + ", apellido=" + apellido + ", nombre=" + nombre + '}';
+        String alu= "id: "+idAlumno + ", " + apellido + ", "+nombre+", dni: "+dni;
+    return alu;
     }
-    
     
 }

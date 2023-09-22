@@ -205,16 +205,10 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
             
             double nota=(Double)jtTablaMateria.getValueAt(filaSeleccinada, 2);
 //            return nota;
+
            for (Alumno  alum : insc.obtenerAlumnosPorMateria(idmateria)) {
             int idalumno= alum.getIdAlumno();
-            
-                 in.setNota(nota);
-                 
-//                 double nota2=;
-                  JOptionPane.showMessageDialog(null, nota);       
-                insc.actualizarNota(idalumno, idmateria, nota);
-
-                    //insc.actualizarNota(alum.getIdAlumno(), idmateria, nota);
+        insc.actualizarNota(idalumno, idmateria, nota);    
             }
              
            

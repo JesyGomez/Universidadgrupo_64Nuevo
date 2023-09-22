@@ -177,7 +177,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         fm.setVisible(true);
         escritorio.add(fm);
         escritorio.moveToFront(fm);
-
+        
     }//GEN-LAST:event_jmForMateriaActionPerformed
 
     private void jmManipuNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmManipuNotaActionPerformed

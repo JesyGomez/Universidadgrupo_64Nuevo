@@ -62,7 +62,6 @@ private DefaultTableModel modelo=new DefaultTableModel(){
         jcbMateria.setBackground(new java.awt.Color(0, 102, 255));
         jcbMateria.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jcbMateria.setForeground(new java.awt.Color(255, 255, 255));
-        jcbMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jtAlumnosPorMateria.setBackground(new java.awt.Color(0, 102, 255));
         jtAlumnosPorMateria.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
