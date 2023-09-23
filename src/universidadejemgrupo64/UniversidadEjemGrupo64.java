@@ -54,7 +54,7 @@ public class UniversidadEjemGrupo64 {
 //        }
 //
         Alumno Alberto = ad.buscarAlumno(12);
-        Materia mate = md.buscarMateria(5);
+        Materia mate = md.buscarMateriaPorId(5);
         Inscripcion insc = new Inscripcion(Alberto, mate, 8);
         id.guardarInscripcion(insc);
         id.actualizarNota(3,2,7);

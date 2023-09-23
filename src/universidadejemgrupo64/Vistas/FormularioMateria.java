@@ -314,15 +314,33 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
     private void jlBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlBuscarMouseClicked
         MateriaData materiaData = new MateriaData();
         try {
-            int idMateria = Integer.parseInt(jtID.getText());
+            String idMateriaText = jtID.getText();
+            String nombreMateria = jtNombre.getText();
+            Materia materiaEncontrada = null;
 
-            Materia materiaEncontrada = materiaData.buscarMateria(idMateria);
+            if (idMateriaText.isEmpty() && nombreMateria.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID o un nombre para buscar.");
+                return;
+            } else if (!idMateriaText.isEmpty()) {
+                int idMateria = Integer.parseInt(idMateriaText);
+                materiaEncontrada = materiaData.buscarMateriaPorId(idMateria);
+            } else if (!nombreMateria.isEmpty()) {
+                materiaEncontrada = materiaData.buscarMateriaPorNombre(nombreMateria);
+            }
 
             if (materiaEncontrada != null) {
-                jtNombre.setText(materiaEncontrada.getNombre());
-                jtAnio.setText(String.valueOf(materiaEncontrada.getAnio()));
-                jrbEstado.setSelected(materiaEncontrada.isEstado());
+                if (materiaEncontrada.isEstado()) {
+                    JOptionPane.showMessageDialog(this, "La materia se encontró en la lista.");
+                    jtNombre.setText(materiaEncontrada.getNombre());
+                    jtAnio.setText(String.valueOf(materiaEncontrada.getAnio()));
+                    jrbEstado.setSelected(materiaEncontrada.isEstado());
+                } else {
+                    jtNombre.setText(materiaEncontrada.getNombre());
+                    jtAnio.setText(String.valueOf(materiaEncontrada.getAnio()));
+                    jrbEstado.setSelected(materiaEncontrada.isEstado());
+                }
             } else {
+                JOptionPane.showMessageDialog(this, "La materia no se encontró en la lista.");
                 jtNombre.setText("");
                 jtAnio.setText("");
                 jrbEstado.setSelected(false);
@@ -360,19 +378,21 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
             // Crear una instancia de Materia con los datos modificados
             Materia materiaModificada = new Materia(idMateria, nombreMateria, anioMateria, estadoMateria);
+            // Mostrar un cuadro de diálogo de confirmación
+            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro desea realizar este cambio en la materia?", "Confirmar Modificación", JOptionPane.YES_NO_OPTION);
 
-            materiaData.modificarMateria(materiaModificada);
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                // El usuario ha confirmado, entonces procedemos a modificar la materia
+                materiaData.modificarMateria(materiaModificada);
 
-            JOptionPane.showMessageDialog(this, "Materia modificada exitosamente.");
-
-            jtID.setText("");
-            jtNombre.setText("");
-            jtAnio.setText("");
-            jrbEstado.setSelected(false);
+                jtID.setText("");
+                jtNombre.setText("");
+                jtAnio.setText("");
+                jrbEstado.setSelected(false);
+            }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El ID y el Año deben ser números válidos.");
         }
-
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed

@@ -19,12 +19,13 @@ import universidadejemplogrupo64.AccesoADatos.MateriaData;
  * @author Windows 10 OS
  */
 public class AlumnoPorMateria extends javax.swing.JInternalFrame {
-private DefaultTableModel modelo=new DefaultTableModel(){
-    public boolean isCellEditable(int f, int c){
-          return false;
-}
 
-};
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int f, int c) {
+            return false;
+        }
+ };
+
     /**
      * Creates new form AlumnoPorMateria
      */
@@ -155,37 +156,30 @@ private DefaultTableModel modelo=new DefaultTableModel(){
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         // TODO add your handling code here:
-        
         int a = JOptionPane.YES_NO_OPTION;
         int resultado = JOptionPane.showConfirmDialog(this, "Desea Salir?", "SALIR", a);
         if (resultado == 0) {
 
             this.dispose();
         }
-        
-        
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jcbMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMateriaActionPerformed
         // TODO add your handling code here:
-        
+
         Materia materiaSeleccionada = (Materia) jcbMateria.getSelectedItem();
         InscripcionData aluData = new InscripcionData();
-        if (materiaSeleccionada != null){
+        if (materiaSeleccionada != null) {
             borrarFilas();
-            for (Alumno inscrip :aluData.obtenerAlumnosPorMateria(materiaSeleccionada.getIdMateria()) ) {
-         
-          modelo.addRow(new Object[]{
-              inscrip.getIdAlumno(),
-              inscrip.getDni(),
-              inscrip.getApellido(),
-              inscrip.getNombre()});
+            for (Alumno inscrip : aluData.obtenerAlumnosPorMateria(materiaSeleccionada.getIdMateria())) {
+
+                modelo.addRow(new Object[]{
+                    inscrip.getIdAlumno(),
+                    inscrip.getDni(),
+                    inscrip.getApellido(),
+                    inscrip.getNombre()});
+            }
         }
-            
-            
-            
-        }
-        
     }//GEN-LAST:event_jcbMateriaActionPerformed
 
 
@@ -199,34 +193,27 @@ private DefaultTableModel modelo=new DefaultTableModel(){
     private javax.swing.JTable jtAlumnosPorMateria;
     // End of variables declaration//GEN-END:variables
 
-    
-    
-    private void armarCabecera(){
-       modelo.addColumn("ID");
-       modelo.addColumn("DNI");
-       modelo.addColumn("Apellido");
-       modelo.addColumn("Nombre");
-       jtAlumnosPorMateria.setModel(modelo);
-       
+    private void armarCabecera() {
+        modelo.addColumn("ID");
+        modelo.addColumn("DNI");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("Nombre");
+        jtAlumnosPorMateria.setModel(modelo);
     }
-    
+
     private void borrarFilas() {
 
         int filas = jtAlumnosPorMateria.getRowCount() - 1;
         for (int f = filas; f >= 0; f--) {
             modelo.removeRow(f);
-
         }
     }
-    
-    private void cargarMaterias( ){
-         
-         MateriaData mate=new MateriaData();
-        for (Materia materia:mate.listarMateria()){
+
+    private void cargarMaterias() {
+
+        MateriaData mate = new MateriaData();
+        for (Materia materia : mate.listarMateria()) {
             jcbMateria.addItem(materia);
         }
-    
-    
-
-}
+    }
 }

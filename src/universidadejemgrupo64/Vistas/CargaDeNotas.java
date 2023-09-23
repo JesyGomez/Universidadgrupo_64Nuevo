@@ -5,7 +5,6 @@
  */
 package universidadejemgrupo64.Vistas;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -22,25 +21,27 @@ import universidadejemplogrupo64.AccesoADatos.MateriaData;
  * @author Mis Documentos
  */
 public class CargaDeNotas extends javax.swing.JInternalFrame {
-  private MateriaData materiaData;
-    
-    private DefaultTableModel modelo=new DefaultTableModel(){
-    public boolean isCellEditable(int f, int c){
-        
-         if (c ==2) {
-            return true;
-        }
-          return false;
-}
 
-};
+    private MateriaData materiaData;
+
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int f, int c) {
+
+            if (c == 2) {
+                return true;
+            }
+            return false;
+        }
+
+    };
+
     /**
      * Creates new form CargaDeNotas
      */
-    
+
     public CargaDeNotas() {
         initComponents();
-       
+
         armarCabecera();
         cargarAlumnos();
     }
@@ -152,27 +153,26 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
 
     private void jcbAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbAlumnosActionPerformed
         // TODO add your handling code here:
-        
+
         Alumno alumnoSeleccionado = (Alumno) jcbAlumnos.getSelectedItem();
         //InscripcionData aluIns = new InscripcionData();
         InscripcionData insc = new InscripcionData();
-        if (alumnoSeleccionado != null){
-        borrarFilas();
-         for (Inscripcion inscrip :insc.obtenerMateriasCursadasDos(alumnoSeleccionado.getIdAlumno()) ) {
-         
-          modelo.addRow(new Object[]{
-              inscrip.getMateria().getIdMateria(),
-              inscrip.getMateria().getNombre(),
-              inscrip.getNota() });
+        if (alumnoSeleccionado != null) {
+            borrarFilas();
+            for (Inscripcion inscrip : insc.obtenerMateriasCursadasDos(alumnoSeleccionado.getIdAlumno())) {
+
+                modelo.addRow(new Object[]{
+                    inscrip.getMateria().getIdMateria(),
+                    inscrip.getMateria().getNombre(),
+                    inscrip.getNota()});
+            }
         }
-        }  
-            
+
 //            int idSeleccionado = alumnoSeleccionado.getIdAlumno();
 //            JOptionPane.showMessageDialog(null,idSeleccionado );
 //            for(Inscripcion listarMateria: insc.obtenerMateriasCursadas(idSeleccionado)){
 //               jcbAlumnos.addItem(listarMateria);
-            
-           // Alumno alumnoSeleccionado = (Alumno) jcbAlumnos.getSelectedItem();
+        // Alumno alumnoSeleccionado = (Alumno) jcbAlumnos.getSelectedItem();
 //
 //         if (alumnoSeleccionado != null) {
 //           
@@ -191,29 +191,26 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         // TODO add your handling code here:
-           this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbGuardarNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarNActionPerformed
         // TODO add your handling code here:
-         InscripcionData insc = new InscripcionData();
-         Inscripcion in =new Inscripcion();
-         int filaSeleccinada=jtTablaMateria.getSelectedRow();
-      
-        if (filaSeleccinada!=-1) {
-            int idmateria=(Integer)jtTablaMateria.getValueAt(filaSeleccinada, 0);
-              double nota2= obtenerNuevaNota();
-           // double nota=(Double)jtTablaMateria.getValueAt(filaSeleccinada, 2);
-               jtTablaMateria.setValueAt(nota2, filaSeleccinada, 2);
+        InscripcionData insc = new InscripcionData();
+        Inscripcion in = new Inscripcion();
+        int filaSeleccinada = jtTablaMateria.getSelectedRow();
 
-           for (Alumno  alum : insc.obtenerAlumnosPorMateria(idmateria)) {
-            int idalumno= alum.getIdAlumno();
-        insc.actualizarNota(idalumno, idmateria, nota2);    
+        if (filaSeleccinada != -1) {
+            int idmateria = (Integer) jtTablaMateria.getValueAt(filaSeleccinada, 0);
+            double nota2 = obtenerNuevaNota();
+            // double nota=(Double)jtTablaMateria.getValueAt(filaSeleccinada, 2);
+            jtTablaMateria.setValueAt(nota2, filaSeleccinada, 2);
+
+            for (Alumno alum : insc.obtenerAlumnosPorMateria(idmateria)) {
+                int idalumno = alum.getIdAlumno();
+                insc.actualizarNota(idalumno, idmateria, nota2);
             }
-             
-           
         }
-        
     }//GEN-LAST:event_jbGuardarNActionPerformed
 
 
@@ -226,49 +223,38 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<Alumno> jcbAlumnos;
     private javax.swing.JTable jtTablaMateria;
     // End of variables declaration//GEN-END:variables
-    
-    
-    private void armarCabecera(){
-       modelo.addColumn("idMateria");
-       modelo.addColumn("nombre");
-       modelo.addColumn("Nota");
-       jtTablaMateria.setModel(modelo);
-       
+
+    private void armarCabecera() {
+        modelo.addColumn("idMateria");
+        modelo.addColumn("nombre");
+        modelo.addColumn("Nota");
+        jtTablaMateria.setModel(modelo);
+
     }
-      private void borrarFilas() {
+
+    private void borrarFilas() {
 
         int filas = jtTablaMateria.getRowCount() - 1;
         for (int f = filas; f >= 0; f--) {
             modelo.removeRow(f);
-
         }
     }
-    
-    
-    private void cargarAlumnos( ){
-         
-         AlumnoData alu=new AlumnoData();
-        for (Alumno alumno:alu.listarAlumnos()){
+
+    private void cargarAlumnos() {
+
+        AlumnoData alu = new AlumnoData();
+        for (Alumno alumno : alu.listarAlumnos()) {
             jcbAlumnos.addItem(alumno);
         }
-        
-    
     }
-     private double obtenerNuevaNota() {
-    String input = JOptionPane.showInputDialog("Ingrese la nueva nota:");
-    try {
-       
-        return Double.parseDouble(input);
-    } catch (NumberFormatException e) {
-        
-        JOptionPane.showMessageDialog(null, "La entrada no es un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        return 0.0; //
+
+    private double obtenerNuevaNota() {
+        String input = JOptionPane.showInputDialog("Ingrese la nueva nota:");
+        try {
+            return Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "La entrada no es un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return 0.0; 
+        }
     }
 }
-   
-    }
-
-
-
-
-

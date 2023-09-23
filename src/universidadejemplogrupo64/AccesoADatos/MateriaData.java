@@ -49,15 +49,16 @@ public class MateriaData {
 
     }
 
-    public Materia buscarMateria(int id) {
+
+public Materia buscarMateriaPorId(int id) {
     String sql = "SELECT idMateria, nombre, año, estado FROM materia WHERE idMateria = ?";
     Materia materia = null;
-    
+
     try {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
-        
+
         if (rs.next()) {
             materia = new Materia();
             materia.setIdMateria(id);
@@ -66,7 +67,40 @@ public class MateriaData {
             materia.setEstado(rs.getBoolean("estado"));
 
             if (!materia.isEstado()) {
-                JOptionPane.showMessageDialog(null, "La Materia está inactiva.");
+                JOptionPane.showMessageDialog(null, "La materia se encuentra en la lista pero está Inactiva.");
+            }
+        } else {
+            System.out.println("La materia no se encontró en la lista.");
+        }
+
+        ps.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia.");
+    }
+
+    return materia;
+}
+
+public Materia buscarMateriaPorNombre(String nombre) {
+    String sql = "SELECT idMateria, nombre, año, estado FROM materia WHERE nombre = ?";
+    Materia materia = null;
+
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, nombre);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            materia = new Materia();
+            int id = rs.getInt("idMateria");
+            materia.setIdMateria(id);
+            materia.setNombre(nombre);
+            materia.setAnio(rs.getInt("año"));
+            materia.setEstado(rs.getBoolean("estado"));
+
+
+            if (!materia.isEstado()) {
+                JOptionPane.showMessageDialog(null, "La materia se encuentra en la lista pero está inactiva.");
             }
         } else {
             JOptionPane.showMessageDialog(null, "La Materia no se encontró en la lista.");
@@ -76,10 +110,9 @@ public class MateriaData {
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia.");
     }
-    
-    return materia;
-    }
 
+    return materia;
+}
     public void modificarMateria(Materia materia) {
 
         String sql = "UPDATE materia SET nombre= ?, año= ? , estado= ? "
