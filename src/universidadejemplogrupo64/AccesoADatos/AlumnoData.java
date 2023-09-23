@@ -48,7 +48,7 @@ public class AlumnoData {
     }
 
     public void modificarAlumno(Alumno alumno) {
-        String sql = "UPDATE alumno SET dni = ?, apellido = ?, nombre = ?, fechaNacimiento = ? "
+        String sql = "UPDATE alumno SET dni = ?, apellido = ?, nombre = ?, fechaNacimiento = ?, estado=? "
                 + "WHERE idAlumno = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -56,7 +56,8 @@ public class AlumnoData {
             ps.setString(2, alumno.getApellido());
             ps.setString(3, alumno.getNombre());
             ps.setDate(4, Date.valueOf(alumno.getFechaNacimiento()));
-            ps.setInt(5, alumno.getIdAlumno());
+            ps.setBoolean(5, alumno.isActivo());
+            ps.setInt(6, alumno.getIdAlumno());
             int exito = ps.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Alumno modificado exitosamente!");
@@ -108,7 +109,7 @@ public class AlumnoData {
     }
 
     public Alumno buscarAlumnoPorDni(int dni) {
-        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento FROM alumno WHERE dni = ? AND estado = 1";
+        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento, estado FROM alumno WHERE dni = ? AND estado = 1";
         Alumno alumno = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -121,9 +122,15 @@ public class AlumnoData {
                 alumno.setApellido(rs.getNString("apellido"));
                 alumno.setNombre(rs.getNString("nombre"));
                 alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
-                alumno.setActivo(true);
+                alumno.setActivo(rs.getBoolean("estado"));
             } else {
                 JOptionPane.showMessageDialog(null, "No existe un alumno activo con ese DNI");
+                int a = JOptionPane.YES_NO_OPTION;
+                int resultado = JOptionPane.showConfirmDialog(null, "Desea buscar dentro de los alumnos inactivos?", "Atencion", a);
+                if (resultado == 0) {
+                alumno=buscarAlumnoPorDniInactivo(dni);
+                }
+
             }
             ps.close();
         } catch (SQLException ex) {
@@ -155,6 +162,33 @@ public class AlumnoData {
             JOptionPane.showMessageDialog(null, "Error al cargar la lista de Alumnos");
         }
         return alumnos;
+    }
+
+    public Alumno buscarAlumnoPorDniInactivo(int dni) {
+        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento FROM alumno WHERE dni = ? AND estado = 0";
+        Alumno alumno = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                alumno = new Alumno();
+                alumno.setIdAlumno(rs.getInt("idAlumno"));
+                alumno.setDni(rs.getInt("dni"));
+                alumno.setApellido(rs.getNString("apellido"));
+                alumno.setNombre(rs.getNString("nombre"));
+                alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                alumno.setActivo(false);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe un alumno con ese DNI");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        return alumno;
     }
 
 }

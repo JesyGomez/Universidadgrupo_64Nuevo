@@ -309,6 +309,7 @@ private boolean modoEdicion = false;
             JOptionPane.showMessageDialog(this, "Error: Para buscar por dni, debe ingresar numeros.", "Error de Entrada", JOptionPane.ERROR_MESSAGE);
         }
         deshabilitarCampos();
+        verificarBotonEditar();
         
 
     }//GEN-LAST:event_jlBuscarMouseClicked
@@ -359,9 +360,11 @@ private boolean modoEdicion = false;
             int id = Integer.parseInt(jtId.getText());
             guardarAlumno.setIdAlumno(id);
             alu.modificarAlumno(guardarAlumno);
+            verificarBotonEditar();
             
         } else {
             alu.guardarAlumno(guardarAlumno);
+            verificarBotonEditar();
         }
         
         } catch (NumberFormatException e) {
@@ -374,7 +377,7 @@ private boolean modoEdicion = false;
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         // TODO add your handling code here:
-
+        verificarBotonEditar();
         limpiarCampos();
         habilitarCampos();
     }//GEN-LAST:event_jbNuevoActionPerformed
@@ -391,7 +394,7 @@ private boolean modoEdicion = false;
 
             if (respuesta == JOptionPane.YES_OPTION) {
                 alumnoAEliminar.eliminarAlumno(idAEliminar);
-                JOptionPane.showMessageDialog(this, "Alumno eliminado exitosamente.");
+                verificarBotonEditar();
                 limpiarCampos();
             }
 
@@ -405,7 +408,7 @@ private boolean modoEdicion = false;
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         // TODO add your handling code here:
         int a = JOptionPane.YES_NO_OPTION;
-        int resultado = JOptionPane.showConfirmDialog(this, "Desea Salir?", "SALIR", a);
+        int resultado = JOptionPane.showConfirmDialog(null, "Desea Salir?", "SALIR", a);
         if (resultado == 0) {
 
             this.dispose();
@@ -480,6 +483,15 @@ private boolean modoEdicion = false;
         jcbEstado.setEnabled(false);
         jdcFechaNac.setEnabled(false);
 
+    }
+    
+    private void verificarBotonEditar(){
+        
+        if (jtbEditar.isSelected()) {
+            jtbEditar.setSelected(false);
+            
+        }
+        
     }
 
 }
