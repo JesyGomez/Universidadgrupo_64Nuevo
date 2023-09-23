@@ -19,7 +19,7 @@ import universidadejemplogrupo64.AccesoADatos.AlumnoData;
  * @author Windows 10 OS
  */
 public class FormularioAlumno extends javax.swing.JInternalFrame {
-
+private boolean modoEdicion = false;
     /**
      * Creates new form FormularioAlumno
      */
@@ -309,11 +309,13 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error: Para buscar por dni, debe ingresar numeros.", "Error de Entrada", JOptionPane.ERROR_MESSAGE);
         }
         deshabilitarCampos();
+        
 
     }//GEN-LAST:event_jlBuscarMouseClicked
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-
+        
+        try{
         /////// PRIMERO INSTANCIO UN AlumnoData PARA PODER LLAMAR SUS METODOS:
         AlumnoData alu = new AlumnoData();
 
@@ -322,6 +324,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
         //// PASO A GUARDAR CADA DATO DEL FORMULARIO ADENTRO DE VARIABLES QUE LUEGO QUE SE UTILIZARAN PARA
         //// CARGAR LOS DATOS DEL Alumno INSTANCIADO guardarAlumno
+        
         int dni = Integer.parseInt(jtDocumento.getText());
         String apellido = jtApellido.getText();
         String nombre = jtNombre.getText();
@@ -352,7 +355,20 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
         ///// YA CREADO EL ALUMNO DE PORQUERIA, SE LO PASO AL METODO guardarAlumno QUE SE ENCUENTRA EN AlumnoData
         ///// A TRAVES DEL alu INSTANCIADO AL PRINCIPIO.
-        alu.guardarAlumno(guardarAlumno);
+        if (modoEdicion) {
+            int id = Integer.parseInt(jtId.getText());
+            guardarAlumno.setIdAlumno(id);
+            alu.modificarAlumno(guardarAlumno);
+            
+        } else {
+            alu.guardarAlumno(guardarAlumno);
+        }
+        
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error: Debe ingresar un código válido.", "Error de Entrada", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_jbGuardarActionPerformed
 
@@ -400,9 +416,11 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             // El JToggleButton ha sido presionado, llama a habilitarCampos()
+            modoEdicion=true;
             habilitarCampos();
         } else {
             // El JToggleButton ha sido desactivado, llama a desHabilitarCampos()
+            modoEdicion=false;
             deshabilitarCampos();
         }
     }//GEN-LAST:event_jtbEditarItemStateChanged

@@ -57,7 +57,7 @@ private boolean estado;
 
     @Override
     public String toString() {
-        return "Materia: " + idMateria + ", nombre: " + nombre + ", año: " + anio + '}';
+        return "ID Materia: " + idMateria + ", Nombre: " + nombre + ", Año: " + anio + '}';
     }
 
 
