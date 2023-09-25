@@ -56,18 +56,19 @@ public class UniversidadEjemGrupo64 {
         Alumno Alberto = ad.buscarAlumno(12);
         Materia mate = md.buscarMateriaPorId(5);
         Inscripcion insc = new Inscripcion(Alberto, mate, 8);
-        id.guardarInscripcion(insc);
-        id.actualizarNota(3,2,7);
-        id.borrarInscripcionMateriaAlumno(3, 2);
-        for (Inscripcion inscripcion : id.obtenerInscripciones()) {
-            System.out.println("id"+inscripcion.getIdInscripcion());
-            System.out.println("Apellido"+inscripcion.getAlumno());
-            System.out.println("Materia"+inscripcion.getMateria());
-        }
-
-        for (Materia materia : id.obtenerMateriasCursadas(5)) {
-                System.out.println("nombre" + materia.getNombre());
-        }
+//        id.guardarInscripcion(insc);
+//        id.actualizarNota(3,2,7);
+        id.obtenerAlumnosPorMateria(5);
+        //id.borrarInscripcionMateriaAlumno(3, 2);
+//        for (Inscripcion inscripcion : id.obtenerInscripciones()) {
+//            System.out.println("id"+inscripcion.getIdInscripcion());
+//            System.out.println("Apellido"+inscripcion.getAlumno());
+//            System.out.println("Materia"+inscripcion.getMateria());
+//        }
+//
+//        for (Materia materia : id.obtenerMateriasCursadas(5)) {
+//                System.out.println("nombre" + materia.getNombre());
+//        }
     }
 
     
