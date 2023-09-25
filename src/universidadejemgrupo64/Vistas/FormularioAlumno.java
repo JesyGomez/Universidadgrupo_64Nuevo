@@ -149,6 +149,11 @@ private boolean modoEdicion = false;
         jcbEstado.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jcbEstado.setForeground(new java.awt.Color(255, 255, 255));
         jcbEstado.setText("Activo/Inactivo");
+        jcbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbEstadoActionPerformed(evt);
+            }
+        });
 
         jtId.setBackground(new java.awt.Color(255, 255, 255));
         jtId.setForeground(new java.awt.Color(0, 0, 0));
@@ -427,6 +432,10 @@ private boolean modoEdicion = false;
             deshabilitarCampos();
         }
     }//GEN-LAST:event_jtbEditarItemStateChanged
+
+    private void jcbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbEstadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
