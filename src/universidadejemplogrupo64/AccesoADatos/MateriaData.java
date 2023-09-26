@@ -18,6 +18,8 @@ public class MateriaData {
 
         con = Conexion.getConexion();
     }
+    
+    public static final int ERROR_SQL_MATERIA_DUPLICADA = 1062;
 
     public MateriaData(int codigo, String nombre, int anio) {
     }
@@ -44,7 +46,12 @@ public class MateriaData {
             ps.close();
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia");
+            if (ex.getErrorCode() == ERROR_SQL_MATERIA_DUPLICADA) {
+                JOptionPane.showMessageDialog(null, "La Materia que intenta guardar, ya existe.");
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia");
+        }
+        
         }
 
     }
