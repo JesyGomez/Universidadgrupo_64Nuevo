@@ -21,7 +21,9 @@ import universidadejemplogrupo64.AccesoADatos.MateriaData;
  * @author Mis Documentos
  */
 public class CargaDeNotas extends javax.swing.JInternalFrame {
-
+   private InscripcionData insData;
+   private AlumnoData aluData;
+   private MateriaData matData;
     private MateriaData materiaData;
 
     private DefaultTableModel modelo = new DefaultTableModel() {
@@ -41,7 +43,9 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
 
     public CargaDeNotas() {
         initComponents();
-
+          aluData= new AlumnoData();
+          insData= new InscripcionData();
+          
         armarCabecera();
         cargarAlumnos();
     }
@@ -91,7 +95,7 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
             }
         });
 
-        jbGuardarN.setText("Guardar");
+        jbGuardarN.setText("Modificar Nota");
         jbGuardarN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbGuardarNActionPerformed(evt);
@@ -153,13 +157,11 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
 
     private void jcbAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbAlumnosActionPerformed
         // TODO add your handling code here:
-
         Alumno alumnoSeleccionado = (Alumno) jcbAlumnos.getSelectedItem();
-        //InscripcionData aluIns = new InscripcionData();
-        InscripcionData insc = new InscripcionData();
+    
         if (alumnoSeleccionado != null) {
             borrarFilas();
-            for (Inscripcion inscrip : insc.obtenerMateriasCursadasDos(alumnoSeleccionado.getIdAlumno())) {
+            for (Inscripcion inscrip : insData.obtenerMateriasCursadasDos(alumnoSeleccionado.getIdAlumno())) {
 
                 modelo.addRow(new Object[]{
                     inscrip.getMateria().getIdMateria(),
@@ -167,50 +169,41 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
                     inscrip.getNota()});
             }
         }
-
-//            int idSeleccionado = alumnoSeleccionado.getIdAlumno();
-//            JOptionPane.showMessageDialog(null,idSeleccionado );
-//            for(Inscripcion listarMateria: insc.obtenerMateriasCursadas(idSeleccionado)){
-//               jcbAlumnos.addItem(listarMateria);
-        // Alumno alumnoSeleccionado = (Alumno) jcbAlumnos.getSelectedItem();
-//
-//         if (alumnoSeleccionado != null) {
-//           
-//            for (Materia materiaConNota : insc.cargarMateriasConNotas(alumnoSeleccionado.getIdAlumno())) {
-//        Materia materia = materiaConNota;
-//        //int nota = materiaConNota.get;
-//        modelo.addRow(new Object[]{
-//            materia.getIdMateria(),
-//            materia.getNombre(),
-//           // materia.getAnio(),
-//            //nota // Agrega la columna de nota
-//        });
-//    }
-
     }//GEN-LAST:event_jcbAlumnosActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+         int a = JOptionPane.YES_NO_OPTION;
+            int resultado = JOptionPane.showConfirmDialog(null, "Desea Salir?", "SALIR", a);
+              if (resultado == 0) {
+
+                 this.dispose();
+              }
+              
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbGuardarNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarNActionPerformed
         // TODO add your handling code here:
-        InscripcionData insc = new InscripcionData();
-        Inscripcion in = new Inscripcion();
+      Inscripcion in = new Inscripcion();
         int filaSeleccinada = jtTablaMateria.getSelectedRow();
-
+        Alumno selec = (Alumno)jcbAlumnos.getSelectedItem();  
         if (filaSeleccinada != -1) {
             int idmateria = (Integer) jtTablaMateria.getValueAt(filaSeleccinada, 0);
             double nota2 = obtenerNuevaNota();
-            // double nota=(Double)jtTablaMateria.getValueAt(filaSeleccinada, 2);
-            jtTablaMateria.setValueAt(nota2, filaSeleccinada, 2);
-
-            for (Alumno alum : insc.obtenerAlumnosPorMateria(idmateria)) {
-                int idalumno = alum.getIdAlumno();
-                insc.actualizarNota(idalumno, idmateria, nota2);
-            }
+            //validamos la nota entre 0 y 10
+                if (nota2 >=0 && nota2 <=10) {
+                
+                      jtTablaMateria.setValueAt(nota2, filaSeleccinada, 2);
+               } else {
+                         // si la nota no esta en rango válido se muestra un mensaje de error 
+                         JOptionPane.showMessageDialog(null, "La nota debe estar entre 0 y 10.", "Error", JOptionPane.ERROR_MESSAGE);
+              }
+                       insData.actualizarNota(selec.getIdAlumno(), idmateria, nota2);
+             
+        
         }
+        
+            
     }//GEN-LAST:event_jbGuardarNActionPerformed
 
 
@@ -242,8 +235,8 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
 
     private void cargarAlumnos() {
 
-        AlumnoData alu = new AlumnoData();
-        for (Alumno alumno : alu.listarAlumnos()) {
+       
+        for (Alumno alumno : aluData.listarAlumnos()) {
             jcbAlumnos.addItem(alumno);
         }
     }
