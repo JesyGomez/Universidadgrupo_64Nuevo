@@ -22,6 +22,8 @@ public class AlumnoData {
         con = Conexion.getConexion();
     }
 
+    public static final int ERROR_SQL_CLAVE_DUPLICADA = 1062;
+
     public void guardarAlumno(Alumno alumno) {
 
         String sql = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado)"
@@ -43,7 +45,12 @@ public class AlumnoData {
             ps.close();
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno" + ex.getMessage());
+            if (ex.getErrorCode() == ERROR_SQL_CLAVE_DUPLICADA) {
+                JOptionPane.showMessageDialog(null, "El DNI que intenta guardar, ya existe.");
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno al guardar" + ex.getMessage() + ex.getErrorCode());
+            }
         }
     }
 
@@ -65,7 +72,14 @@ public class AlumnoData {
             ps.close();
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la Tabla Alumno" + ex.getMessage());
+            if (ex.getErrorCode() == ERROR_SQL_CLAVE_DUPLICADA) {
+                JOptionPane.showMessageDialog(null, "El DNI que intenta modificar, ya existe.", "Error de entrada",JOptionPane.ERROR_MESSAGE);
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "Error al acceder a la Tabla Alumno al modificar. "
+                        + ex.getMessage());
+            }
         }
     }
 
@@ -79,7 +93,7 @@ public class AlumnoData {
                 JOptionPane.showMessageDialog(null, "Alumno Eliminado exitosamente!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno al eliminar" + ex.getMessage());
         }
     }
 
@@ -128,7 +142,7 @@ public class AlumnoData {
                 int a = JOptionPane.YES_NO_OPTION;
                 int resultado = JOptionPane.showConfirmDialog(null, "Desea buscar dentro de los alumnos inactivos?", "Atencion", a);
                 if (resultado == 0) {
-                alumno=buscarAlumnoPorDniInactivo(dni);
+                    alumno = buscarAlumnoPorDniInactivo(dni);
                 }
 
             }
@@ -187,7 +201,7 @@ public class AlumnoData {
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
         return alumno;
     }
 

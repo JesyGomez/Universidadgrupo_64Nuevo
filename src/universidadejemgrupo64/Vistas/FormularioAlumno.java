@@ -19,13 +19,14 @@ import universidadejemplogrupo64.AccesoADatos.AlumnoData;
  * @author Windows 10 OS
  */
 public class FormularioAlumno extends javax.swing.JInternalFrame {
-private boolean modoEdicion = false;
+private boolean modoEdicion = false; // Modo Edicion se establece en false, cambia de estado junto al boton Editar
     /**
      * Creates new form FormularioAlumno
      */
     public FormularioAlumno() {
         initComponents();
         habilitarCampos();
+        jtbEditar.setEnabled(false);
     }
 
     /**
@@ -59,7 +60,7 @@ private boolean modoEdicion = false;
         jtbEditar = new javax.swing.JToggleButton();
 
         setClosable(true);
-        setMaximizable(true);
+        setResizable(true);
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 255));
 
@@ -180,23 +181,35 @@ private boolean modoEdicion = false;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(136, 136, 136)
-                        .addComponent(jlAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jlId)
-                                .addGap(18, 18, 18)
-                                .addComponent(jtId, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jlDocumento)
-                                .addGap(19, 19, 19)
-                                .addComponent(jtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jlAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
+                        .addComponent(jbNuevo)
+                        .addGap(26, 26, 26)
+                        .addComponent(jbEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addComponent(jbGuardar)
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtbEditar)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jlId)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jtId, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jlDocumento)
+                                        .addGap(19, 19, 19)
+                                        .addComponent(jtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(jlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -218,17 +231,8 @@ private boolean modoEdicion = false;
                                         .addComponent(jlEstado)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jcbEstado)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jbNuevo)
-                                .addGap(26, 26, 26)
-                                .addComponent(jbEliminar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                                .addComponent(jbGuardar)
-                                .addGap(27, 27, 27)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtbEditar))))))
+                                .addGap(5, 5, 5)))
+                        .addGap(16, 16, 16)))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -236,7 +240,7 @@ private boolean modoEdicion = false;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jlAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlId))
@@ -263,7 +267,7 @@ private boolean modoEdicion = false;
                             .addComponent(jlFechaNac)
                             .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbGuardar)
                     .addComponent(jbEliminar)
@@ -315,6 +319,8 @@ private boolean modoEdicion = false;
         }
         deshabilitarCampos();
         verificarBotonEditar();
+        jbGuardar.setEnabled(false);
+        jtbEditar.setEnabled(true);
         
 
     }//GEN-LAST:event_jlBuscarMouseClicked
@@ -385,6 +391,8 @@ private boolean modoEdicion = false;
         verificarBotonEditar();
         limpiarCampos();
         habilitarCampos();
+        jbGuardar.setEnabled(true);
+        jtbEditar.setEnabled(false);
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
@@ -394,7 +402,7 @@ private boolean modoEdicion = false;
             int idAEliminar = Integer.parseInt(jtId.getText());
             AlumnoData alumnoAEliminar = new AlumnoData();
 
-            // Mostrar un cuadro de diálogo de confirmación
+            // Mostrar un cuadro de diálogo de confirmación para eliminar el alumno, para evitar accidentes.
             int respuesta = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este alumno?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
 
             if (respuesta == JOptionPane.YES_OPTION) {
@@ -426,9 +434,11 @@ private boolean modoEdicion = false;
             // El JToggleButton ha sido presionado, llama a habilitarCampos()
             modoEdicion=true;
             habilitarCampos();
+            jbGuardar.setEnabled(true);
         } else {
             // El JToggleButton ha sido desactivado, llama a desHabilitarCampos()
             modoEdicion=false;
+            jbGuardar.setEnabled(false);
             deshabilitarCampos();
         }
     }//GEN-LAST:event_jtbEditarItemStateChanged
