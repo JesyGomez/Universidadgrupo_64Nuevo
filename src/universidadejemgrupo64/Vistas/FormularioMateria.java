@@ -332,10 +332,12 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
             if (materiaEncontrada != null) {
                 if (materiaEncontrada.isEstado()) {
                     JOptionPane.showMessageDialog(this, "La materia se encontró en la lista.");
+                    jtID.setText(String.valueOf(materiaEncontrada.getIdMateria()));
                     jtNombre.setText(materiaEncontrada.getNombre());
                     jtAnio.setText(String.valueOf(materiaEncontrada.getAnio()));
                     jrbEstado.setSelected(materiaEncontrada.isEstado());
                 } else {
+                    jtID.setText(String.valueOf(materiaEncontrada.getIdMateria()));
                     jtNombre.setText(materiaEncontrada.getNombre());
                     jtAnio.setText(String.valueOf(materiaEncontrada.getAnio()));
                     jrbEstado.setSelected(materiaEncontrada.isEstado());
