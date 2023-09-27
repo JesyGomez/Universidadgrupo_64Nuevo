@@ -83,6 +83,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jmAdministracion.setText("Administración");
 
         jmManejoInsc.setText("Manejo de Inscripciones");
+        jmManejoInsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmManejoInscActionPerformed(evt);
+            }
+        });
         jmAdministracion.add(jmManejoInsc);
 
         jmManipuNota.setText("Manipulación de Notas");
@@ -200,6 +205,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_jmSalirMouseClicked
+
+    private void jmManejoInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmManejoInscActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        FormularioInscripcion fm=new FormularioInscripcion();
+        fm.setVisible(true);
+        escritorio.add(fm);
+        escritorio.moveToFront(fm);
+    }//GEN-LAST:event_jmManejoInscActionPerformed
 
     /**
      * @param args the command line arguments
