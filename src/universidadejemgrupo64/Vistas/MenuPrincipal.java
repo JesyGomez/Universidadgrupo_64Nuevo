@@ -52,11 +52,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         );
 
         jmAlumno.setText("Alumno");
-        jmAlumno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmAlumnoActionPerformed(evt);
-            }
-        });
 
         jmForAlumno.setText("Formulario de Alumno");
         jmForAlumno.addActionListener(new java.awt.event.ActionListener() {
@@ -169,11 +164,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         escritorio.moveToFront(apm);
     }//GEN-LAST:event_jmAlumMateriaActionPerformed
 
-    private void jmAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAlumnoActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jmAlumnoActionPerformed
-
     private void jmForMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmForMateriaActionPerformed
         // TODO add your handling code here:
         escritorio.removeAll();
@@ -182,7 +172,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         fm.setVisible(true);
         escritorio.add(fm);
         escritorio.moveToFront(fm);
-        
+
     }//GEN-LAST:event_jmForMateriaActionPerformed
 
     private void jmManipuNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmManipuNotaActionPerformed
@@ -210,7 +200,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         escritorio.removeAll();
         escritorio.repaint();
-        FormularioInscripcion fm=new FormularioInscripcion();
+        FormularioInscripcion fm = new FormularioInscripcion();
         fm.setVisible(true);
         escritorio.add(fm);
         escritorio.moveToFront(fm);

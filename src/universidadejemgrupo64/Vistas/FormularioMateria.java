@@ -397,16 +397,18 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
-
+        MateriaData md = new MateriaData();
         try {
             int idMateria = Integer.parseInt(jtID.getText());
+            String nombre = jtNombre.getText();
 
             // Preguntar al usuario si realmente desea eliminar la materia
             int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar la materia?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
                 // Llamar al método eliminarMateria de materiaData
-                md.eliminarMateriaPorIdYNombre(WIDTH, title);
+                
+                md.eliminarMateriaPorIdYNombre(idMateria, nombre);
 
                 JOptionPane.showMessageDialog(this, "Materia eliminada exitosamente.");
 
