@@ -176,11 +176,12 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                             .addGroup(jPEscritorioLayout.createSequentialGroup()
                                 .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jlCodigoEtiqueta)
-                                    .addComponent(jlNombreEtiqueta)
                                     .addComponent(jlEstado))
-                                .addGap(45, 45, 45))
+                                .addGap(53, 53, 53))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPEscritorioLayout.createSequentialGroup()
-                                .addComponent(jlAnioEtiqueta)
+                                .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jlAnioEtiqueta, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlNombreEtiqueta, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jtID, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
@@ -274,10 +275,10 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
             int anioMateria = Integer.parseInt(jtAnio.getText());
             boolean estadoMateria = jrbEstado.isSelected();
 
-            // Validar que el año sea un número positivo
+            // El año tiene que ser un número positivo
             if (anioMateria < 0) {
                 JOptionPane.showMessageDialog(this, "El año debe ser un número positivo.");
-                return; // Salir del método si hay un problema
+                return; 
             }
 
             Materia nuevaMateria = new Materia(nombreMateria, anioMateria, estadoMateria);
@@ -340,7 +341,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                     jrbEstado.setSelected(materiaEncontrada.isEstado());
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "La materia no se encontró en la lista.");
+                //JOptionPane.showMessageDialog(this, "La materia no se encontró en la lista.");
                 jtNombre.setText("");
                 jtAnio.setText("");
                 jrbEstado.setSelected(false);
@@ -382,7 +383,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
             int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro desea realizar este cambio en la materia?", "Confirmar Modificación", JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
-                // El usuario ha confirmado, entonces procedemos a modificar la materia
+                // El usuario ha confirmado, entonces realizamos la modificación de la materia
                 materiaData.modificarMateria(materiaModificada);
 
                 jtID.setText("");

@@ -21,9 +21,10 @@ import universidadejemplogrupo64.AccesoADatos.MateriaData;
  * @author Mis Documentos
  */
 public class CargaDeNotas extends javax.swing.JInternalFrame {
-   private InscripcionData insData;
-   private AlumnoData aluData;
-   private MateriaData matData;
+
+    private InscripcionData insData;
+    private AlumnoData aluData;
+    private MateriaData matData;
     private MateriaData materiaData;
 
     private DefaultTableModel modelo = new DefaultTableModel() {
@@ -40,12 +41,11 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     /**
      * Creates new form CargaDeNotas
      */
-
     public CargaDeNotas() {
         initComponents();
-          aluData= new AlumnoData();
-          insData= new InscripcionData();
-          
+        aluData = new AlumnoData();
+        insData = new InscripcionData();
+
         armarCabecera();
         cargarAlumnos();
     }
@@ -158,7 +158,7 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     private void jcbAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbAlumnosActionPerformed
         // TODO add your handling code here:
         Alumno alumnoSeleccionado = (Alumno) jcbAlumnos.getSelectedItem();
-    
+
         if (alumnoSeleccionado != null) {
             borrarFilas();
             for (Inscripcion inscrip : insData.obtenerMateriasCursadasDos(alumnoSeleccionado.getIdAlumno())) {
@@ -173,37 +173,37 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         // TODO add your handling code here:
-         int a = JOptionPane.YES_NO_OPTION;
-            int resultado = JOptionPane.showConfirmDialog(null, "Desea Salir?", "SALIR", a);
-              if (resultado == 0) {
+        int a = JOptionPane.YES_NO_OPTION;
+        int resultado = JOptionPane.showConfirmDialog(null, "Desea Salir?", "SALIR", a);
+        if (resultado == 0) {
 
-                 this.dispose();
-              }
-              
+            this.dispose();
+        }
+
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbGuardarNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarNActionPerformed
         // TODO add your handling code here:
-      Inscripcion in = new Inscripcion();
+
+        Inscripcion in = new Inscripcion();
         int filaSeleccinada = jtTablaMateria.getSelectedRow();
-        Alumno selec = (Alumno)jcbAlumnos.getSelectedItem();  
+        Alumno selec = (Alumno) jcbAlumnos.getSelectedItem();
         if (filaSeleccinada != -1) {
             int idmateria = (Integer) jtTablaMateria.getValueAt(filaSeleccinada, 0);
-            double nota2 = obtenerNuevaNota();
-            //validamos la nota entre 0 y 10
-                if (nota2 >=0 && nota2 <=10) {
-                
-                      jtTablaMateria.setValueAt(nota2, filaSeleccinada, 2);
-               } else {
-                         // si la nota no esta en rango válido se muestra un mensaje de error 
-                         JOptionPane.showMessageDialog(null, "La nota debe estar entre 0 y 10.", "Error", JOptionPane.ERROR_MESSAGE);
-              }
-                       insData.actualizarNota(selec.getIdAlumno(), idmateria, nota2);
-             
-        
+
+            Double nuevaNota = obtenerNuevaNota();
+            if (nuevaNota != null) {
+                // Validamos la nota entre 0 y 10
+                if (nuevaNota >= 0 && nuevaNota <= 10) {
+                    jtTablaMateria.setValueAt(nuevaNota, filaSeleccinada, 2);
+                    insData.actualizarNota(selec.getIdAlumno(), idmateria, nuevaNota);
+                } else {
+                    // Si la nota no está en rango válido se muestra un mensaje de error 
+                    JOptionPane.showMessageDialog(null, "La nota debe estar entre 0 y 10.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
-        
-            
+
     }//GEN-LAST:event_jbGuardarNActionPerformed
 
 
@@ -222,7 +222,6 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
         modelo.addColumn("nombre");
         modelo.addColumn("Nota");
         jtTablaMateria.setModel(modelo);
-
     }
 
     private void borrarFilas() {
@@ -235,19 +234,21 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
 
     private void cargarAlumnos() {
 
-       
         for (Alumno alumno : aluData.listarAlumnos()) {
             jcbAlumnos.addItem(alumno);
         }
     }
 
-    private double obtenerNuevaNota() {
+    private Double obtenerNuevaNota() {
         String input = JOptionPane.showInputDialog("Ingrese la nueva nota:");
-        try {
-            return Double.parseDouble(input);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "La entrada no es un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-            return 0.0; 
+        if (input != null) {
+            try {
+                return Double.parseDouble(input);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "La entrada no es un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
+        // Devolvemos null para indicar que no se ingresó una nueva nota o se canceló la operación
+        return null;
     }
 }

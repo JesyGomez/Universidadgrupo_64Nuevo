@@ -193,7 +193,7 @@ public class InscripcionData {
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la TABLA Inscripción");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la Tabla Inscripción");
         }
         return alumnosMateria;
 
